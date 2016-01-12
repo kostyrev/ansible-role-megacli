@@ -1,0 +1,35 @@
+---
+# tasks file for kostyrevaa.megacli
+- name: Download MegaCLI zip
+  get_url:
+    url: "{{ megacli_url }}"
+    dest: /opt/megacli.zip
+  tags:
+    - megacli_download
+
+- debug: msg="System {{ inventory_hostname }} checks path /opt/MegaCli-{{ megacli_version }}-*.noarch.rpm"
+  tags: always
+
+- name: Unarchive MegaCLI zip
+  command: unzip /opt/megacli.zip
+  args:
+    chdir: /opt/
+    creates: "/opt/MegaCli-{{ megacli_version }}-{{ megacli_rpm_release }}.noarch.rpm"
+  tags:
+    - megacli_unarchive
+
+- name: Install Lib_Utils
+  command: "rpm -Uhv Lib_Utils-*.rpm"
+  args:
+    chdir: /opt/
+    creates: /opt/lsi/3rdpartylibs
+  tags:
+    - megacli_rpms
+
+- name: Install MegaCli
+  command: "rpm -Uhv MegaCli-*.rpm"
+  args:
+    chdir: /opt/
+    creates: /opt/MegaRAID/MegaCli
+  tags:
+    - megacli_rpms

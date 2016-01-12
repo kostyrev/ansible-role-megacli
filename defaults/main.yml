@@ -1,0 +1,5 @@
+---
+# defaults file for kostyrevaa.megacli
+megacli_version: 8.04.10
+megacli_rpm_release: '1'
+megacli_url: "http://download2.boulder.ibm.com/sar/CMA/XSA/ibm_utl_sraidmr_megacli-{{ megacli_version }}_linux_32-64.zip"
